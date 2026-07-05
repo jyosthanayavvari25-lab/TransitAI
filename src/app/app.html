@@ -1,0 +1,1634 @@
+<div [class.dark]="isDarkMode()" class="min-h-screen font-sans transition-all duration-500 glass-app-bg"
+     [ngClass]="isDarkMode() ? 'text-slate-100' : 'text-slate-800'">
+
+  <!-- Master Layout -->
+  <div class="flex h-screen overflow-hidden">
+
+    <!-- Sidebar Navigation for Desktop -->
+    <aside class="hidden lg:flex flex-col w-64 shrink-0 transition-all duration-300 glass-sidebar">
+      
+      <!-- Brand Logo -->
+      <div class="p-6 border-b flex items-center gap-3"
+           [ngClass]="isDarkMode() ? 'border-white/5' : 'border-black/5'">
+        <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20">
+          <mat-icon class="text-white">directions_transit</mat-icon>
+        </div>
+        <div>
+          <h1 class="font-bold tracking-tight text-lg text-blue-600 dark:text-blue-400">TransitAI</h1>
+          <p class="text-[10px] text-emerald-500 font-medium tracking-wide flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
+            IoT Network Live
+          </p>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="flex-1 p-4 space-y-1.5 overflow-y-auto">
+        <div class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-3 mb-2">Primary</div>
+        
+        <button (click)="switchTab('landing')" 
+                [ngClass]="currentTab() === 'landing' ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/10' : 'hover:bg-slate-100 dark:hover:bg-slate-800/50'"
+                class="flex items-center gap-3 w-full px-4 py-2.5 rounded-xl text-sm font-medium transition-all text-left">
+          <mat-icon>home</mat-icon> Landing Portal
+        </button>
+
+        <button (click)="switchTab('planner')" 
+                [ngClass]="currentTab() === 'planner' ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/10' : 'hover:bg-slate-100 dark:hover:bg-slate-800/50'"
+                class="flex items-center gap-3 w-full px-4 py-2.5 rounded-xl text-sm font-medium transition-all text-left">
+          <mat-icon>route</mat-icon> Route Planner
+        </button>
+
+        <button (click)="switchTab('tracker')" 
+                [ngClass]="currentTab() === 'tracker' ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/10' : 'hover:bg-slate-100 dark:hover:bg-slate-800/50'"
+                class="flex items-center gap-3 w-full px-4 py-2.5 rounded-xl text-sm font-medium transition-all text-left">
+          <mat-icon>map</mat-icon> Live Bus Tracker
+        </button>
+
+        <button (click)="switchTab('assistant')" 
+                [ngClass]="currentTab() === 'assistant' ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/10' : 'hover:bg-slate-100 dark:hover:bg-slate-800/50'"
+                class="flex items-center gap-3 w-full px-4 py-2.5 rounded-xl text-sm font-medium transition-all text-left">
+          <mat-icon>chat_bubble</mat-icon> AI Travel Assistant
+        </button>
+
+        <button (click)="switchTab('stops')" 
+                [ngClass]="currentTab() === 'stops' ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/10' : 'hover:bg-slate-100 dark:hover:bg-slate-800/50'"
+                class="flex items-center gap-3 w-full px-4 py-2.5 rounded-xl text-sm font-medium transition-all text-left">
+          <mat-icon>place</mat-icon> Nearby Bus Stops
+        </button>
+
+        <div class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-3 pt-4 mb-2">Management</div>
+
+        <button (click)="switchTab('dashboard')" 
+                [ngClass]="currentTab() === 'dashboard' ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/10' : 'hover:bg-slate-100 dark:hover:bg-slate-800/50'"
+                class="flex items-center gap-3 w-full px-4 py-2.5 rounded-xl text-sm font-medium transition-all text-left">
+          <mat-icon>account_circle</mat-icon> User Profile
+        </button>
+
+        <button (click)="switchTab('admin')" 
+                [ngClass]="currentTab() === 'admin' ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/10' : 'hover:bg-slate-100 dark:hover:bg-slate-800/50'"
+                class="flex items-center gap-3 w-full px-4 py-2.5 rounded-xl text-sm font-medium transition-all text-left">
+          <mat-icon>analytics</mat-icon> Admin Terminal
+        </button>
+
+        <div class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-3 pt-4 mb-2">System</div>
+
+        <button (click)="switchTab('about')" 
+                [ngClass]="currentTab() === 'about' ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/10' : 'hover:bg-slate-100 dark:hover:bg-slate-800/50'"
+                class="flex items-center gap-3 w-full px-4 py-2.5 rounded-xl text-sm font-medium transition-all text-left">
+          <mat-icon>info</mat-icon> About Tech Stack
+        </button>
+
+        <button (click)="switchTab('contact')" 
+                [ngClass]="currentTab() === 'contact' ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/10' : 'hover:bg-slate-100 dark:hover:bg-slate-800/50'"
+                class="flex items-center gap-3 w-full px-4 py-2.5 rounded-xl text-sm font-medium transition-all text-left">
+          <mat-icon>contact_support</mat-icon> Operator Contact
+        </button>
+      </nav>
+
+      <!-- Sidebar Footer -->
+      <div class="p-4 border-t" [ngClass]="isDarkMode() ? 'border-slate-800/85' : 'border-slate-100'">
+        <div class="flex items-center justify-between">
+          <span class="text-xs text-slate-400">Dark Theme</span>
+          <button (click)="toggleDarkMode()" 
+                  class="w-10 h-6 bg-slate-300 dark:bg-blue-600 rounded-full p-1 transition-all duration-300 relative flex items-center">
+            <span class="w-4 h-4 bg-white rounded-full transition-all duration-300 block"
+                  [ngClass]="isDarkMode() ? 'translate-x-4' : 'translate-x-0'"></span>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Workspace Frame -->
+    <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+
+      <!-- Header Bar -->
+      <header class="flex items-center justify-between px-6 py-4 transition-all duration-300 glass-header">
+        
+        <div class="flex items-center gap-4">
+          <!-- Mobile Menu Trigger -->
+          <button (click)="isMobileMenuOpen.set(!isMobileMenuOpen())" class="lg:hidden p-1.5 rounded-lg border hover:bg-slate-100 dark:hover:bg-slate-800 border-slate-700/30">
+            <mat-icon>menu</mat-icon>
+          </button>
+
+          <h2 class="text-base font-bold tracking-tight md:text-xl flex items-center gap-2">
+            @switch (currentTab()) {
+              @case ('landing') { <span class="text-blue-500">Welcome to TransitAI Portal</span> }
+              @case ('planner') { <span>AI Multimodal Route Optimizer</span> }
+              @case ('tracker') { <span>IoT Live Tracking Interface</span> }
+              @case ('assistant') { <span>Neural Language Agent</span> }
+              @case ('stops') { <span>Transit Station Coordinates</span> }
+              @case ('dashboard') { <span>Commuter Dashboard</span> }
+              @case ('admin') { <span>Central Fleet Operations</span> }
+              @case ('about') { <span>Ecosystem Specifications</span> }
+              @case ('contact') { <span>Helpline Interface</span> }
+            }
+          </h2>
+        </div>
+
+        <!-- Global Action Controls -->
+        <div class="flex items-center gap-3">
+          
+          <!-- Language Selector -->
+          <div class="relative flex items-center gap-1">
+            <mat-icon class="text-xs text-slate-400">translate</mat-icon>
+            <select [value]="selectedLanguage()" 
+                    (change)="selectedLanguage.set($any($event.target).value)"
+                    class="bg-transparent text-xs font-semibold outline-none py-1 border-none cursor-pointer pr-4 focus:ring-0">
+              <option value="English">EN - English</option>
+              <option value="Hindi">HI - हिन्दी</option>
+              <option value="Telugu">TE - తెలుగు</option>
+              <option value="Tamil">TA - தமிழ்</option>
+              <option value="Spanish">ES - Español</option>
+            </select>
+          </div>
+
+          <!-- Voice Guidance Toggle Panel -->
+          <button (click)="toggleVoiceAssistant()" 
+                  [title]="voiceAssistantEnabled() ? 'Disable Screen Reader Guidance' : 'Enable Screen Reader Guidance'"
+                  [ngClass]="voiceAssistantEnabled() ? 'bg-emerald-500/15 border-emerald-500 text-emerald-500' : 'border-slate-300 dark:border-slate-800 text-slate-400 hover:text-slate-100'"
+                  class="p-2 rounded-xl border flex items-center justify-center transition-all">
+            <mat-icon class="text-lg">volume_up</mat-icon>
+          </button>
+        </div>
+      </header>
+
+      <!-- Mobile Dropdown Navigation Drawer -->
+      @if (isMobileMenuOpen()) {
+        <div class="lg:hidden absolute top-16 left-0 right-0 z-40 p-4 flex flex-col gap-2 transition-all glass-card border-none rounded-none shadow-2xl">
+          <button (click)="switchTab('landing')" class="flex items-center gap-2 p-2.5 rounded-lg text-left text-sm font-medium">
+            <mat-icon>home</mat-icon> Landing Portal
+          </button>
+          <button (click)="switchTab('planner')" class="flex items-center gap-2 p-2.5 rounded-lg text-left text-sm font-medium">
+            <mat-icon>route</mat-icon> Route Planner
+          </button>
+          <button (click)="switchTab('tracker')" class="flex items-center gap-2 p-2.5 rounded-lg text-left text-sm font-medium">
+            <mat-icon>map</mat-icon> Live Bus Tracker
+          </button>
+          <button (click)="switchTab('assistant')" class="flex items-center gap-2 p-2.5 rounded-lg text-left text-sm font-medium">
+            <mat-icon>chat_bubble</mat-icon> AI Travel Assistant
+          </button>
+          <button (click)="switchTab('stops')" class="flex items-center gap-2 p-2.5 rounded-lg text-left text-sm font-medium">
+            <mat-icon>place</mat-icon> Nearby Bus Stops
+          </button>
+          <button (click)="switchTab('dashboard')" class="flex items-center gap-2 p-2.5 rounded-lg text-left text-sm font-medium">
+            <mat-icon>account_circle</mat-icon> User Profile
+          </button>
+          <button (click)="switchTab('admin')" class="flex items-center gap-2 p-2.5 rounded-lg text-left text-sm font-medium">
+            <mat-icon>analytics</mat-icon> Admin Terminal
+          </button>
+          <div class="border-t pt-2 mt-1 flex items-center justify-between">
+            <span class="text-xs">Dark Theme</span>
+            <button (click)="toggleDarkMode()" class="bg-blue-600 text-white text-xs px-3 py-1 rounded">Toggle</button>
+          </div>
+        </div>
+      }
+
+      <!-- Dynamic Content Display Frame -->
+      <main class="flex-1 overflow-y-auto p-4 md:p-6">
+
+        <!-- ==================== TAB 1: LANDING PORTAL ==================== -->
+        @if (currentTab() === 'landing') {
+          <div class="max-w-5xl mx-auto space-y-6">
+            
+            <!-- Quick Destination Router Hero -->
+            <div class="relative rounded-3xl overflow-hidden shadow-2xl p-6 md:p-8 border border-white/10 flex flex-col md:flex-row gap-6 md:items-center justify-between"
+                 [ngStyle]="{'background': 'linear-gradient(135deg, rgba(37,99,235,0.9) 0%, rgba(13,44,124,0.95) 100%)'}">
+              <div class="space-y-3 md:max-w-xl text-white">
+                <span class="bg-emerald-500 text-white text-[10px] tracking-wider uppercase font-bold px-2.5 py-1 rounded-full">
+                  Guided City Mobility
+                </span>
+                <h3 class="text-2xl md:text-4xl font-extrabold leading-tight">
+                  Travel any city without knowing bus numbers or local languages.
+                </h3>
+                <p class="text-xs text-white/80">
+                  Powered by neural route grounding. Enter your start and destination in simple language, and let the AI find the exact bus, train, or metro boarding instructions.
+                </p>
+              </div>
+              
+              <!-- Quick routing entry inside hero -->
+              <div class="bg-slate-900/40 backdrop-blur-md rounded-2xl p-5 border border-white/10 w-full md:w-80 space-y-3">
+                <div class="text-xs font-semibold text-white">Quick Journey Search</div>
+                <form [formGroup]="routeForm" (ngSubmit)="planRoute()" class="space-y-2">
+                  <div class="relative">
+                    <input formControlName="from" placeholder="Enter Starting point..." 
+                           class="w-full bg-black/30 text-white placeholder-white/50 text-xs px-3 py-2.5 rounded-lg border border-white/10 focus:outline-none focus:border-blue-400">
+                    @if (fromSuggestions().length > 0) {
+                      <div class="absolute left-0 right-0 top-full mt-1 bg-slate-950 border border-slate-800 rounded-lg shadow-xl z-50 overflow-hidden divide-y divide-slate-800/50">
+                        @for (stop of fromSuggestions(); track stop) {
+                          <button type="button" (click)="selectFromSuggestion(stop)"
+                                  class="w-full text-left text-xs px-3 py-2 text-slate-300 hover:bg-blue-600/20 hover:text-white transition-all">
+                            📍 {{ stop }}
+                          </button>
+                        }
+                      </div>
+                    }
+                  </div>
+                  <div class="relative">
+                    <input formControlName="to" placeholder="Enter Destination..." 
+                           class="w-full bg-black/30 text-white placeholder-white/50 text-xs px-3 py-2.5 rounded-lg border border-white/10 focus:outline-none focus:border-blue-400">
+                    @if (toSuggestions().length > 0) {
+                      <div class="absolute left-0 right-0 top-full mt-1 bg-slate-950 border border-slate-800 rounded-lg shadow-xl z-50 overflow-hidden divide-y divide-slate-800/50">
+                        @for (stop of toSuggestions(); track stop) {
+                          <button type="button" (click)="selectToSuggestion(stop)"
+                                  class="w-full text-left text-xs px-3 py-2 text-slate-300 hover:bg-blue-600/20 hover:text-white transition-all">
+                            📍 {{ stop }}
+                          </button>
+                        }
+                      </div>
+                    }
+                  </div>
+                  <button type="submit" [disabled]="routeForm.invalid"
+                          class="w-full bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 text-white text-xs font-bold py-2 px-4 rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+                    <mat-icon class="text-sm">bolt</mat-icon> AI Optimize
+                  </button>
+                </form>
+              </div>
+            </div>
+
+            <!-- Instant Status Banner Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div class="p-4 flex items-center gap-4 transition-all glass-card">
+                <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center relative">
+                  <mat-icon>directions_bus</mat-icon>
+                  <!-- Green/Red online dot tracker -->
+                  <span class="absolute -top-1 -right-1 flex h-3 w-3">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
+                          [ngClass]="activeFleetOnline() === 4 ? 'bg-emerald-400' : 'bg-red-400'"></span>
+                    <span class="relative inline-flex rounded-full h-3 w-3"
+                          [ngClass]="activeFleetOnline() === 4 ? 'bg-emerald-500' : 'bg-red-500'"></span>
+                  </span>
+                </div>
+                <div>
+                  <div class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Connected Buses</div>
+                  <div class="text-lg font-extrabold flex items-center gap-1.5">
+                    <span>{{ activeFleetOnline() }} / {{ activeFleetTotal() }} Online</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-4 flex items-center gap-4 transition-all glass-card">
+                <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center">
+                  <mat-icon>timer</mat-icon>
+                </div>
+                <div>
+                  <div class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Avg Delay Factor</div>
+                  <div class="text-lg font-extrabold text-emerald-500">{{ averageDelay() }}</div>
+                </div>
+              </div>
+
+              <div class="p-4 flex items-center gap-4 transition-all glass-card">
+                <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-500 flex items-center justify-center">
+                  <mat-icon>groups</mat-icon>
+                </div>
+                <div>
+                  <div class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Journeys Planned Today</div>
+                  <div class="text-lg font-extrabold">{{ journeysPlannedToday() }} Searches</div>
+                </div>
+              </div>
+
+              <button type="button" (click)="cycleWeather()" (keydown.enter)="cycleWeather()"
+                   title="Click to cycle simulated weather"
+                   class="p-4 flex items-center gap-4 text-left transition-all glass-card cursor-pointer hover:bg-white/5 group border border-transparent hover:border-orange-500/20 w-full focus:outline-none">
+                <div class="w-10 h-10 rounded-xl bg-orange-500/10 text-orange-500 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
+                  <mat-icon>cloud_queue</mat-icon>
+                </div>
+                <div>
+                  <div class="text-[10px] text-slate-400 uppercase font-bold tracking-wider flex items-center gap-1">
+                    <span>Weather Grounding</span>
+                    <mat-icon class="text-[10px] text-orange-500 animate-spin" style="width:10px;height:10px;font-size:10px;">sync</mat-icon>
+                  </div>
+                  <div class="text-lg font-extrabold text-orange-500">{{ getWeatherEmoji(currentWeather()) }} {{ currentWeather() }}</div>
+                </div>
+              </button>
+            </div>
+
+            <!-- AI Insights Card -->
+            <div class="p-5 shadow-xl glass-card transition-all hover:shadow-lg border-blue-500/10 border relative overflow-hidden group">
+              <!-- Glow backdrop effect -->
+              <div class="absolute -right-16 -top-16 w-32 h-32 rounded-full bg-blue-500/5 blur-3xl group-hover:bg-blue-500/10 transition-all duration-500"></div>
+              
+              <div class="flex items-center gap-2 mb-3">
+                <div class="w-7 h-7 rounded-lg bg-blue-500/10 text-blue-500 flex items-center justify-center animate-pulse">
+                  <mat-icon class="text-sm">psychology</mat-icon>
+                </div>
+                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">AI Insights & Live Recommendations</h4>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
+                <div class="p-3 rounded-xl bg-slate-900/40 border border-white/5 hover:border-blue-500/30 transition-all duration-300 flex items-center gap-3">
+                  <mat-icon class="text-blue-500 shrink-0 text-base animate-bounce">directions_bus</mat-icon>
+                  <div>
+                    <div class="text-[11px] font-bold text-slate-200">Bus 55K arriving in 4 mins</div>
+                    <div class="text-[9px] text-slate-500">Boarding at Gajuwaka</div>
+                  </div>
+                </div>
+
+                <div class="p-3 rounded-xl bg-slate-900/40 border border-white/5 hover:border-emerald-500/30 transition-all duration-300 flex items-center gap-3">
+                  <mat-icon class="text-emerald-500 shrink-0 text-base">people</mat-icon>
+                  <div>
+                    <div class="text-[11px] font-bold text-slate-200">Route 99 is less crowded</div>
+                    <div class="text-[9px] text-slate-500">Seat availability High</div>
+                  </div>
+                </div>
+
+                <div class="p-3 rounded-xl bg-slate-900/40 border border-white/5 hover:border-orange-500/30 transition-all duration-300 flex items-center gap-3">
+                  <mat-icon class="text-orange-500 shrink-0 text-base animate-pulse">traffic</mat-icon>
+                  <div>
+                    <div class="text-[11px] font-bold text-slate-200">Heavy traffic near NAD Junction</div>
+                    <div class="text-[9px] text-slate-500">Delays up to 7 mins</div>
+                  </div>
+                </div>
+
+                <div class="p-3 rounded-xl bg-slate-900/40 border border-white/5 hover:border-blue-400/30 transition-all duration-300 flex items-center gap-3">
+                  <mat-icon class="text-blue-400 shrink-0 text-base">cloud_queue</mat-icon>
+                  <div>
+                    @if (currentWeather() === 'Sunny') {
+                      <div class="text-[11px] font-bold text-slate-200">Sunny roads near Gajuwaka</div>
+                      <div class="text-[9px] text-slate-500">Dry driving conditions</div>
+                    } @else if (currentWeather() === 'Cloudy') {
+                      <div class="text-[11px] font-bold text-slate-200">Overcast clouds near Gajuwaka</div>
+                      <div class="text-[9px] text-slate-500">Normal transit operations</div>
+                    } @else if (currentWeather() === 'Rainy') {
+                      <div class="text-[11px] font-bold text-slate-200">Rain detected near Gajuwaka</div>
+                      <div class="text-[9px] text-slate-500">Wet roads warning active</div>
+                    } @else {
+                      <div class="text-[11px] font-bold text-slate-200">Heavy Rain near Gajuwaka</div>
+                      <div class="text-[9px] text-slate-500">Reduced speeds warning</div>
+                    }
+                  </div>
+                </div>
+
+                <div class="p-3 rounded-xl bg-slate-900/40 border border-white/5 hover:border-purple-500/30 transition-all duration-300 flex items-center gap-3">
+                  <mat-icon class="text-purple-500 shrink-0 text-base">shuffle</mat-icon>
+                  <div>
+                    <div class="text-[11px] font-bold text-slate-200">Suggested alt bus: 600</div>
+                    <div class="text-[9px] text-slate-500">Fastest transit option</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recent Searches -->
+            <div class="space-y-3">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">Recent Searches</h4>
+              <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                @for (qs of recentSearches(); track $index) {
+                  <button (click)="selectQuickSearch(qs)" 
+                          class="p-4 text-left transition-all flex flex-col justify-between hover:-translate-y-1 hover:shadow-md cursor-pointer group glass-card">
+                    <div class="space-y-1.5">
+                      <div class="flex items-center gap-1.5 text-[10px] text-blue-500 font-semibold">
+                        <mat-icon class="text-xs">share_location</mat-icon> Search {{$index + 1}}
+                      </div>
+                      <div class="text-xs font-bold line-clamp-1">From: {{qs.from}}</div>
+                      <div class="text-[11px] text-slate-400 font-medium">To: {{qs.to}}</div>
+                    </div>
+                    <div class="pt-2 border-t mt-2 flex items-center justify-between text-[10px] text-blue-500 font-bold uppercase tracking-wider group-hover:text-blue-400 border-white/10">
+                      <span>Reroute</span>
+                      <mat-icon class="text-xs">arrow_forward</mat-icon>
+                    </div>
+                  </button>
+                } @empty {
+                  <div class="p-6 md:col-span-5 text-center text-xs text-slate-500 glass-card">
+                    No recent searches yet. Try planning a journey to see history here!
+                  </div>
+                }
+              </div>
+            </div>
+
+            <!-- Features Bento Showcase -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div class="p-6 flex flex-col gap-3 justify-between glass-card">
+                <div class="space-y-2">
+                  <div class="w-10 h-10 rounded-xl bg-blue-600/10 text-blue-500 flex items-center justify-center">
+                    <mat-icon>record_voice_over</mat-icon>
+                  </div>
+                  <h4 class="text-sm font-bold">Voice-Guided Assist</h4>
+                  <p class="text-xs text-slate-400 leading-relaxed">
+                    Designed for visual impairment and tourist accessibility. Full audio screen reader support, voice searches, and real-time step text-to-speech feedback.
+                  </p>
+                </div>
+                <button (click)="toggleVoiceAssistant()" 
+                        class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-2 rounded-xl transition-all cursor-pointer mt-4">
+                  {{ voiceAssistantEnabled() ? 'Guidance Active' : 'Enable Voice Guidance' }}
+                </button>
+              </div>
+
+              <div class="p-6 flex flex-col gap-3 justify-between glass-card">
+                <div class="space-y-2">
+                  <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center">
+                    <mat-icon>qr_code_scanner</mat-icon>
+                  </div>
+                  <h4 class="text-sm font-bold">QR Code Boarding</h4>
+                  <p class="text-xs text-slate-400 leading-relaxed">
+                    Arrived at a stop? Simply scan the TransitAI QR sticker to instantly load upcoming buses, delay factors, and occupancies without typing a single letter.
+                  </p>
+                </div>
+                <button (click)="switchTab('stops'); toggleQRScanner()" 
+                        class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold py-2 rounded-xl transition-all cursor-pointer mt-4">
+                  Open Scan Simulator
+                </button>
+              </div>
+
+              <div class="p-6 flex flex-col gap-3 justify-between glass-card">
+                <div class="space-y-2">
+                  <div class="w-10 h-10 rounded-xl bg-orange-500/10 text-orange-500 flex items-center justify-center">
+                    <mat-icon>sync_problem</mat-icon>
+                  </div>
+                  <h4 class="text-sm font-bold">Offline Connectivity Caching</h4>
+                  <p class="text-xs text-slate-400 leading-relaxed">
+                    Poor internet? Save optimized routes with one-click to the secure offline local storage. Access directions, stop names, and digital board texts anytime.
+                  </p>
+                </div>
+                <button (click)="switchTab('dashboard')" 
+                        class="bg-slate-800 hover:bg-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-200 text-xs font-bold py-2 rounded-xl transition-all cursor-pointer mt-4">
+                  View Offline Logs
+                </button>
+              </div>
+            </div>
+
+          </div>
+        }
+
+        <!-- ==================== TAB 2: ROUTE PLANNER ==================== -->
+        @if (currentTab() === 'planner') {
+          <div class="max-w-4xl mx-auto space-y-6">
+            
+            <!-- Routing Inputs Glass Card -->
+            <div class="p-6 transition-all shadow-xl glass-card">
+              
+              <h3 class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-4">Plan Your Journey</h3>
+              
+              <form [formGroup]="routeForm" (ngSubmit)="planRoute()" class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
+                
+                <!-- From -->
+                <div class="md:col-span-5 space-y-1.5 relative">
+                  <label for="route-from" class="text-[10px] font-bold text-slate-400 uppercase tracking-wide block">Current Location / Landmark</label>
+                  <div class="flex gap-2 relative">
+                    <input id="route-from" formControlName="from" placeholder="e.g., Gajuwaka" 
+                           class="w-full text-xs p-3 rounded-xl focus:outline-none glass-input"
+                           [ngClass]="isDarkMode() ? 'text-white' : 'text-slate-800'">
+                    <button type="button" (click)="routeForm.patchValue({from: 'Gajuwaka'})"
+                            title="Set to Gajuwaka"
+                            class="px-2 border rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 border-slate-700/30 flex items-center justify-center">
+                      <mat-icon class="text-sm">directions_bus</mat-icon>
+                    </button>
+                  </div>
+                  @if (fromSuggestions().length > 0) {
+                    <div class="absolute left-0 right-0 top-full mt-1 bg-slate-950 border border-slate-800 rounded-xl shadow-xl z-50 overflow-hidden divide-y divide-slate-800/50">
+                      @for (stop of fromSuggestions(); track stop) {
+                        <button type="button" (click)="selectFromSuggestion(stop)"
+                                class="w-full text-left text-xs px-3 py-2 text-slate-300 hover:bg-blue-600/20 hover:text-white transition-all">
+                          📍 {{ stop }}
+                        </button>
+                      }
+                    </div>
+                  }
+                </div>
+
+                <!-- Swap/Connector Arrow -->
+                <div class="hidden md:flex md:col-span-1 justify-center pb-3">
+                  <mat-icon class="text-slate-500">sync_alt</mat-icon>
+                </div>
+
+                <!-- To -->
+                <div class="md:col-span-4 space-y-1.5 relative">
+                  <label for="route-to" class="text-[10px] font-bold text-slate-400 uppercase tracking-wide block">Destination Address</label>
+                  <div class="flex gap-2 relative">
+                    <input id="route-to" formControlName="to" placeholder="e.g., Kottavalasa" 
+                           class="w-full text-xs p-3 rounded-xl focus:outline-none glass-input"
+                           [ngClass]="isDarkMode() ? 'text-white' : 'text-slate-800'">
+                    
+                    <!-- Favorite shortcuts -->
+                    <button type="button" (click)="routeForm.patchValue({to: 'Kottavalasa'})" title="Kottavalasa"
+                            class="px-2 border rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 border-slate-700/30 flex items-center justify-center text-xs font-bold">
+                      Kot
+                    </button>
+                  </div>
+                  @if (toSuggestions().length > 0) {
+                    <div class="absolute left-0 right-0 top-full mt-1 bg-slate-950 border border-slate-800 rounded-xl shadow-xl z-50 overflow-hidden divide-y divide-slate-800/50">
+                      @for (stop of toSuggestions(); track stop) {
+                        <button type="button" (click)="selectToSuggestion(stop)"
+                                class="w-full text-left text-xs px-3 py-2 text-slate-300 hover:bg-blue-600/20 hover:text-white transition-all">
+                          📍 {{ stop }}
+                        </button>
+                      }
+                    </div>
+                  }
+                </div>
+
+                <!-- Submit Button -->
+                <div class="md:col-span-2">
+                  <button type="submit" [disabled]="routeForm.invalid || routeLoading()"
+                          class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs py-3 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5">
+                    @if (routeLoading()) {
+                      <span class="w-4 h-4 rounded-full border-2 border-white border-t-transparent animate-spin"></span>
+                      Solving...
+                    } @else {
+                      <mat-icon>directions</mat-icon> Optimize
+                    }
+                  </button>
+                </div>
+              </form>
+
+              <!-- Favorites Quick shortcuts panel -->
+              <div class="mt-4 pt-3 border-t border-slate-800/40 flex flex-wrap gap-2 items-center">
+                <span class="text-[10px] text-slate-500 font-bold uppercase tracking-wide">Route shortcuts:</span>
+                <button (click)="useFavorite('college')" class="bg-blue-600/10 hover:bg-blue-600/20 text-blue-500 text-[10px] font-bold px-3 py-1 rounded-full border border-blue-500/10 transition-all">
+                  🎓 College: {{ favoriteCollege() }}
+                </button>
+                @if (favoriteHome()) {
+                  <button (click)="useFavorite('home')" class="bg-blue-600/10 hover:bg-blue-600/20 text-blue-500 text-[10px] font-bold px-3 py-1 rounded-full border border-blue-500/10 transition-all">
+                    🏠 Home: {{ favoriteHome() }}
+                  </button>
+                }
+                @if (favoriteOffice()) {
+                  <button (click)="useFavorite('office')" class="bg-blue-600/10 hover:bg-blue-600/20 text-blue-500 text-[10px] font-bold px-3 py-1 rounded-full border border-blue-500/10 transition-all">
+                    💼 Office: {{ favoriteOffice() }}
+                  </button>
+                }
+              </div>
+
+            </div>
+
+            <!-- Route Loading Placeholder -->
+            @if (routeLoading()) {
+              <div class="p-12 text-center space-y-4 glass-card">
+                <div class="relative w-16 h-16 mx-auto">
+                  <div class="absolute inset-0 rounded-full border-4 border-blue-500/15"></div>
+                  <div class="absolute inset-0 rounded-full border-4 border-blue-600 border-t-transparent animate-spin"></div>
+                </div>
+                <div class="space-y-1.5">
+                  <h4 class="text-sm font-bold">AI is optimizing your journey...</h4>
+                  <p class="text-xs text-slate-400">Querying real-time weather logs, delay models, and occupancy statistics...</p>
+                </div>
+              </div>
+            }
+
+            @if (routeError()) {
+              <div class="rounded-2xl bg-red-500/10 border border-red-500/30 text-red-500 text-xs p-4 flex items-center gap-3">
+                <mat-icon>error_outline</mat-icon>
+                <span>{{ routeError() }}</span>
+              </div>
+            }
+
+            <!-- Recommended optimized route result -->
+            @if (selectedRoute(); as route) {
+              <div class="space-y-6">
+                
+                <!-- Primary recommendation overview -->
+                <div class="p-6 relative overflow-hidden shadow-xl glass-card">
+                  
+                  <!-- Absolute ribbon alert for delayed routes -->
+                  @if (route.recommendedRoute.delayMinutes > 5) {
+                    <div class="absolute top-0 right-0 bg-orange-500 text-white text-[9px] uppercase tracking-widest font-bold py-1 px-4 rounded-bl-xl flex items-center gap-1">
+                      <mat-icon class="text-[10px] h-3.5 w-3.5">warning</mat-icon> Live Delay Active
+                    </div>
+                  }
+
+                  <!-- AI Optimization Checklist -->
+                  <div class="mb-4 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 space-y-1.5 text-xs">
+                    <div class="font-bold flex items-center gap-1.5">
+                      <mat-icon class="text-sm">check_circle</mat-icon> 
+                      <span>TransitAI Smart Engine Optimization Report:</span>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-1.5 pl-5 font-semibold text-slate-300 text-[11px]">
+                      <div>✔ Best Bus: <span class="text-white">{{ route.recommendedRoute.type }} {{ route.recommendedRoute.lineName }}</span></div>
+                      <div>✔ Estimated Fare: <span class="text-white">₹{{ route.recommendedRoute.fareAmount }}</span></div>
+                      <div>✔ Travel Time: <span class="text-white">{{ adjustedDuration() }} Mins</span></div>
+                      <div>✔ Number of Stops: <span class="text-white">{{ route.recommendedRoute.stopsCount }} Stops</span></div>
+                      <div>✔ Route Map: <span class="text-white">Active</span></div>
+                      <div>✔ Live Bus Status: <span class="text-white">Connected</span></div>
+                      @if (route.alternatives && route.alternatives.length > 0) {
+                        <div class="col-span-2">✔ Alternative Route: <span class="text-white">{{ route.alternatives[0].lineName }} ({{ route.alternatives[0].durationMinutes }} mins)</span></div>
+                      } @else {
+                        <div class="col-span-2">✔ Alternative Route: <span class="text-slate-400">None required (Optimal)</span></div>
+                      }
+                    </div>
+                  </div>
+
+                  <div class="flex flex-col md:flex-row justify-between gap-4 md:items-center">
+                    
+                    <div class="space-y-1">
+                      <div class="text-[10px] text-emerald-500 font-bold uppercase tracking-wider flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Recommend travel path
+                      </div>
+                      
+                      <!-- Board title and vehicle description -->
+                      <div class="flex items-center gap-3 pt-1 flex-wrap">
+                        <span class="bg-blue-600 text-white text-xs font-extrabold px-3 py-1 rounded-lg">
+                          {{ route.recommendedRoute.type }} {{ route.recommendedRoute.lineName }}
+                        </span>
+                        <h3 class="text-lg font-extrabold tracking-tight">
+                          Show Board: "{{ route.recommendedRoute.destinationBoard }}"
+                        </h3>
+                      </div>
+                    </div>
+
+                    <!-- Duration, stops count and cost -->
+                    <div class="flex gap-4 border-l pl-4 border-slate-700/40">
+                      <div>
+                        <div class="text-[10px] text-slate-400 font-bold uppercase">Estimated Duration</div>
+                        <div class="text-lg font-extrabold text-blue-500">{{ adjustedDuration() }} Min</div>
+                      </div>
+                      <div>
+                        <div class="text-[10px] text-slate-400 font-bold uppercase">Estimated Fare</div>
+                        <div class="text-lg font-extrabold text-emerald-500">₹{{ route.recommendedRoute.fareAmount }}</div>
+                      </div>
+                      <div>
+                        <div class="text-[10px] text-slate-400 font-bold uppercase">Total Stops</div>
+                        <div class="text-lg font-extrabold">{{ route.recommendedRoute.stopsCount }}</div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <!-- Alert banner for delay predictions -->
+                  @if (route.recommendedRoute.delayMinutes > 0) {
+                    <div class="mt-4 p-3 rounded-2xl border border-orange-500/20 bg-orange-500/5 flex items-start gap-2.5 text-xs text-orange-400">
+                      <mat-icon class="text-lg shrink-0 mt-0.5">report_problem</mat-icon>
+                      <div>
+                        <div class="font-bold">Delay Forecast (+{{route.recommendedRoute.delayMinutes}} mins):</div>
+                        <div class="text-[11px] text-slate-300">{{ route.recommendedRoute.delayReason }}</div>
+                      </div>
+                    </div>
+                  }
+
+                  <!-- Occupancy meter -->
+                  <div class="mt-4 pt-4 border-t border-slate-800/40 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="flex items-center gap-3">
+                      <span class="text-xs text-slate-400 font-bold uppercase tracking-wide">Predicted Occupancy:</span>
+                      <span class="text-xs font-bold px-2.5 py-0.5 rounded-full uppercase"
+                            [ngClass]="{
+                              'bg-green-500/10 text-green-500 border border-green-500/20': route.recommendedRoute.occupancy === 'Low',
+                              'bg-yellow-500/10 text-yellow-500 border border-yellow-500/20': route.recommendedRoute.occupancy === 'Medium',
+                              'bg-red-500/10 text-red-500 border border-red-500/20': route.recommendedRoute.occupancy === 'High'
+                            }">
+                        {{ route.recommendedRoute.occupancy }} Density
+                      </span>
+                    </div>
+
+                    <!-- Sync Secure Offline trigger -->
+                    <div class="flex justify-end">
+                      <button (click)="saveRouteOffline()" 
+                              class="bg-slate-800 hover:bg-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-200 text-xs font-bold px-4 py-1.5 rounded-xl border border-slate-700/60 transition-all flex items-center gap-1.5 cursor-pointer">
+                        <mat-icon class="text-sm">offline_pin</mat-icon> Save Offline Caches
+                      </button>
+                    </div>
+                  </div>
+
+                </div>
+
+                <!-- Speech Readout support card for Visually Impaired -->
+                @if (route.naturalAdvice) {
+                  <div class="rounded-2xl p-5 border border-blue-500/20 bg-blue-500/5 space-y-3">
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center gap-2 text-xs font-bold text-blue-400">
+                        <mat-icon>hearing</mat-icon> Screen Reader Voice Description
+                      </div>
+                      <button (click)="speakText(route.naturalAdvice)" 
+                              class="bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold py-1 px-3 rounded-lg transition-all flex items-center gap-1">
+                        <mat-icon class="text-[12px] h-3 w-3">play_arrow</mat-icon> Read Aloud
+                      </button>
+                    </div>
+                    <p class="text-xs italic leading-relaxed text-slate-300">
+                      "{{ route.naturalAdvice }}"
+                    </p>
+                  </div>
+                }
+
+                <!-- Step-by-Step visual milestones -->
+                <div class="space-y-4">
+                  <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">Milestone Guide ({{route.recommendedRoute.stopsCount}} Stops)</h4>
+                  
+                  <div class="relative pl-6 space-y-6 border-l-2 border-dashed border-blue-500/30">
+                    
+                    <!-- Board Stop -->
+                    <div class="relative">
+                      <span class="absolute -left-[31px] top-0 w-4 h-4 rounded-full bg-blue-600 border-4 border-slate-950 flex items-center justify-center"></span>
+                      <div class="space-y-1">
+                        <div class="text-[10px] uppercase font-bold text-slate-400">Boarding Point</div>
+                        <h5 class="text-xs font-bold">{{ route.recommendedRoute.boardingStop }}</h5>
+                        <p class="text-[10px] text-slate-400">Enter vehicle via Door 1. Validate smart-pass or scan ticket.</p>
+                      </div>
+                    </div>
+
+                    <!-- Intermediate Stops Details -->
+                    <div class="relative">
+                      <span class="absolute -left-[31px] top-0 w-4 h-4 rounded-full bg-slate-500 border-4 border-slate-950 flex items-center justify-center"></span>
+                      <div class="space-y-1">
+                        <div class="text-[10px] uppercase font-bold text-slate-400">Intermediate Enroute Stops</div>
+                        <div class="flex flex-wrap gap-1.5 py-1">
+                          @for (stop of route.recommendedRoute.stopsList; track $index) {
+                            @if ($index > 0 && $index < route.recommendedRoute.stopsList.length - 1) {
+                              <span class="bg-slate-800/40 text-slate-300 text-[10px] px-2.5 py-0.5 rounded-full border border-slate-800">
+                                ● {{ stop }}
+                              </span>
+                            }
+                          }
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Drop-Off stop -->
+                    <div class="relative">
+                      <span class="absolute -left-[31px] top-0 w-4 h-4 rounded-full bg-emerald-500 border-4 border-slate-950 flex items-center justify-center"></span>
+                      <div class="space-y-1">
+                        <div class="text-[10px] uppercase font-bold text-slate-400">Alighting Destination</div>
+                        <h5 class="text-xs font-bold">{{ route.recommendedRoute.dropOffStop }}</h5>
+                        <p class="text-[10px] text-slate-400">A light at the front exit gate. Walking distance is under 120m.</p>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+                <!-- Alternatives routes table -->
+                @if (route.alternatives && route.alternatives.length > 0) {
+                  <div class="space-y-3">
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">Alternative Options</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      @for (alt of route.alternatives; track $index) {
+                        <div class="p-4 space-y-2.5 transition-all glass-card-dark border-none hover:bg-white/5">
+                          
+                          <div class="flex justify-between items-center">
+                            <span class="bg-slate-800 text-slate-300 text-[10px] font-bold px-2 py-0.5 rounded uppercase">
+                              {{ alt.type }}
+                            </span>
+                            <span class="text-xs text-slate-400">₹{{ alt.fareAmount }} Fare</span>
+                          </div>
+
+                          <div class="space-y-1">
+                            <h5 class="text-xs font-bold">{{ alt.lineName }}</h5>
+                            <p class="text-[11px] text-slate-400">
+                              Board at: <span class="font-medium text-slate-300">{{ alt.boardingStop }}</span>
+                            </p>
+                          </div>
+
+                          <div class="pt-2 border-t border-slate-800 flex items-center justify-between text-[10px]">
+                            <span class="text-slate-400">Time: <span class="font-bold text-blue-500">{{ alt.durationMinutes }}m</span></span>
+                            <span class="text-slate-400">Occupancy: <span class="font-bold text-emerald-500">{{ alt.occupancy }}</span></span>
+                          </div>
+
+                        </div>
+                      }
+                    </div>
+                  </div>
+                }
+
+              </div>
+            }
+
+          </div>
+        }
+
+        <!-- ==================== TAB 3: LIVE BUS TRACKER ==================== -->
+        @if (currentTab() === 'tracker') {
+          <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
+            
+            <!-- Map Section -->
+            <div class="lg:col-span-8 flex flex-col gap-4">
+              
+              <!-- Map Canvas / SVG -->
+              <div class="shadow-2xl relative h-96 overflow-hidden select-none glass-card map-bg">
+                
+                <!-- Background grid representing streets -->
+                <svg class="absolute inset-0 w-full h-full opacity-35" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Bay of Bengal Water Body -->
+                  <path d="M 0 0 Q 30 150 120 220 T 310 280 T 550 320 T 800 350 L 800 0 L 0 0 Z" fill="#1E40AF" fill-opacity="0.15"></path>
+                  
+                  <!-- Main High-speed Arteries -->
+                  <line x1="15" y1="35" x2="80" y2="75" stroke="#475569" stroke-width="6" stroke-linecap="round"></line>
+                  <text x="50" y="50" fill="#94A3B8" font-size="8" transform="rotate(30 50 50)">NH-16 Highway</text>
+                  
+                  <!-- Gajuwaka Route -->
+                  <line x1="10" y1="70" x2="90" y2="20" stroke="#475569" stroke-width="4" stroke-dasharray="8 4" opacity="0.6"></line>
+                  <!-- Local roads -->
+                  <line x1="30" y1="20" x2="85" y2="85" stroke="#334155" stroke-width="3"></line>
+                  <line x1="5" y1="90" x2="45" y2="25" stroke="#334155" stroke-width="3"></line>
+
+                  <!-- Secondary connecting grids -->
+                  <circle cx="22" cy="45" r="4" fill="#3B82F6" fill-opacity="0.2"></circle>
+                  <circle cx="50" cy="35" r="4" fill="#10B981" fill-opacity="0.2"></circle>
+                  <circle cx="75" cy="62" r="4" fill="#F97316" fill-opacity="0.2"></circle>
+                </svg>
+
+                <!-- Live bus nodes -->
+                @for (bus of liveBuses(); track bus.id) {
+                  <!-- Map Bus Marker with coordinates converted to % -->
+                  <button (click)="selectedBus.set(bus)"
+                          [style.left.%]="bus.coordinates.x" [style.top.%]="bus.coordinates.y"
+                          class="absolute -translate-x-1/2 -translate-y-1/2 group cursor-pointer transition-all duration-1000">
+                    
+                    <!-- Live pulsing aura -->
+                    <span class="absolute -inset-2.5 rounded-full animate-ping opacity-25"
+                          [style.background-color]="bus.color"></span>
+                    
+                    <!-- Core bus marker pointer -->
+                    <div class="w-7 h-7 rounded-xl flex items-center justify-center text-white border border-slate-900 shadow-md transition-all group-hover:scale-125"
+                         [style.background-color]="bus.color">
+                      <mat-icon class="text-xs font-bold">directions_bus</mat-icon>
+                    </div>
+
+                    <!-- Pinned Label -->
+                    <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 bg-slate-900 text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow whitespace-nowrap border border-slate-800">
+                      {{ bus.lineName }} ({{ bus.speed }}k)
+                    </div>
+                  </button>
+                }
+
+                <!-- Static Bus stops on the map -->
+                @for (stop of busStops(); track stop.id) {
+                  <div [style.left.%]="stop.id === 'STP-01' ? 15 : stop.id === 'STP-02' ? 30 : stop.id === 'STP-03' ? 50 : stop.id === 'STP-04' ? 68 : stop.id === 'STP-05' ? 80 : 88" 
+                       [style.top.%]="stop.id === 'STP-01' ? 35 : stop.id === 'STP-02' ? 52 : stop.id === 'STP-03' ? 44 : stop.id === 'STP-04' ? 64 : stop.id === 'STP-05' ? 75 : 82"
+                       class="absolute -translate-x-1/2 -translate-y-1/2">
+                    <button (click)="selectedStop.set(stop)" class="w-3.5 h-3.5 rounded-full bg-slate-400 border-2 border-slate-950 dark:border-white flex items-center justify-center hover:bg-blue-400 hover:scale-125 transition-all">
+                    </button>
+                    <!-- Stop indicator label -->
+                    <div class="absolute top-full left-1/2 -translate-x-1/2 mt-0.5 text-[8px] text-slate-400 bg-slate-900/60 px-1 rounded whitespace-nowrap">
+                      {{ stop.name.split(' ')[0] }}
+                    </div>
+                  </div>
+                }
+
+                <!-- User location marker -->
+                <div class="absolute left-[20%] top-[40%] -translate-x-1/2 -translate-y-1/2">
+                  <span class="absolute -inset-3 rounded-full bg-emerald-500 animate-ping opacity-25"></span>
+                  <div class="w-4 h-4 rounded-full bg-emerald-500 border-2 border-slate-950 dark:border-white shadow-lg flex items-center justify-center">
+                    <mat-icon class="text-[8px] text-white">person</mat-icon>
+                  </div>
+                  <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 bg-emerald-500 text-white text-[8px] font-bold py-0.5 px-1.5 rounded shadow whitespace-nowrap">
+                    Your Location
+                  </div>
+                </div>
+
+                <!-- Floating map details overlay -->
+                <div class="absolute bottom-4 left-4 right-4 backdrop-blur rounded-2xl p-3 flex items-center justify-between gap-4 text-white glass-card-dark">
+                  <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span class="text-[10px] font-mono">Live Sat-Linked Coordinates Feed (GPS refresh every 4s)</span>
+                  </div>
+                  <div class="text-[10px] text-slate-400">
+                    Click any vehicle or stop to query telemetry
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Stop Details Pinned Board -->
+              @if (selectedStop()) {
+                <div class="p-5 shadow-lg flex items-start gap-4 glass-card">
+                  <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center shrink-0">
+                    <mat-icon>place</mat-icon>
+                  </div>
+                  <div class="space-y-1.5 flex-1">
+                    <div class="flex justify-between items-center">
+                      <span class="text-[10px] uppercase font-bold text-slate-400">Station Telemetry</span>
+                      <span class="text-[10px] text-blue-400 font-bold tracking-wide">Distance: {{ selectedStop()?.distanceMeter }}m</span>
+                    </div>
+                    <h4 class="text-sm font-bold">{{ selectedStop()?.name }}</h4>
+                    <div class="flex items-center gap-1.5 pt-1">
+                      <span class="text-[10px] text-slate-400">Serviced lines:</span>
+                      @for (ln of selectedStop()?.lines; track ln) {
+                        <span class="bg-blue-600/15 text-blue-500 text-[9px] font-bold px-2 py-0.5 rounded border border-blue-500/10">
+                          {{ ln }}
+                        </span>
+                      }
+                    </div>
+                  </div>
+                </div>
+              }
+
+            </div>
+
+            <!-- Sidebar Info/Scan Terminal -->
+            <div class="lg:col-span-4 space-y-6">
+              
+              <!-- QR Simulator module -->
+              <div class="p-5 shadow-xl space-y-4 glass-card">
+                <div class="flex justify-between items-center">
+                  <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">QR stop scanner</h4>
+                  <button (click)="toggleQRScanner()" class="bg-blue-600/10 hover:bg-blue-600/20 text-blue-500 text-[10px] px-2.5 py-1 rounded-lg font-bold border border-blue-500/10 transition-all">
+                    {{ qrScannerActive() ? 'Close' : 'Simulate Scanner' }}
+                  </button>
+                </div>
+
+                @if (qrScannerActive()) {
+                  <div class="rounded-2xl border border-slate-800 overflow-hidden bg-black aspect-video relative flex flex-col items-center justify-center p-4">
+                    
+                    <!-- Scanner camera outline -->
+                    <div class="absolute inset-8 border-2 border-emerald-500 rounded border-dashed opacity-75">
+                      <span class="absolute top-0 left-0 w-4 h-4 border-t-4 border-l-4 border-emerald-500 -mt-1 -ml-1"></span>
+                      <span class="absolute top-0 right-0 w-4 h-4 border-t-4 border-r-4 border-emerald-500 -mt-1 -mr-1"></span>
+                      <span class="absolute bottom-0 left-0 w-4 h-4 border-b-4 border-l-4 border-emerald-500 -mb-1 -ml-1"></span>
+                      <span class="absolute bottom-0 right-0 w-4 h-4 border-b-4 border-r-4 border-emerald-500 -mb-1 -mr-1"></span>
+                    </div>
+
+                    <!-- Red laser overlay -->
+                    <div class="absolute left-0 right-0 h-0.5 bg-red-500 opacity-60 animate-bounce top-1/2"></div>
+
+                    <div class="z-10 text-center space-y-2">
+                      <div class="text-[10px] font-semibold text-slate-300">Target Stop QR Sticker</div>
+                      <div class="flex flex-col gap-1.5 justify-center max-w-xs mx-auto">
+                        @for (stop of busStops(); track stop.id) {
+                          <button (click)="scanDemoStop(stop)" 
+                                  class="bg-slate-800/80 hover:bg-slate-700 text-[9px] text-white py-1 px-2 rounded border border-slate-700 font-bold uppercase transition-all">
+                            Scan sticker at "{{ stop.name.split(' ')[0] }}"
+                          </button>
+                        }
+                      </div>
+                    </div>
+                  </div>
+                }
+
+                @if (qrScannedStop(); as scanned) {
+                  <div class="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 space-y-3">
+                    <div class="flex items-center gap-2 text-emerald-500 text-xs font-bold">
+                      <mat-icon>check_circle</mat-icon> Arrived at stop: {{ scanned.name }}
+                    </div>
+                    <div class="text-[10px] text-slate-300">
+                      Telemetry scan complete. Live incoming dispatch lists synchronized. Next bus is 55K approaching Scindia in 4 minutes.
+                    </div>
+                    <div class="flex gap-1">
+                      <button (click)="routeForm.patchValue({from: scanned.name}); switchTab('planner')" 
+                              class="bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] py-1 px-3 rounded font-bold transition-all">
+                        Plan Journey From Here
+                      </button>
+                    </div>
+                  </div>
+                }
+
+              </div>
+
+              <!-- Pinned Bus Detail Telemetry Card -->
+              <div class="p-5 shadow-xl space-y-4 glass-card">
+                
+                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">Vehicle Telemetry details</h4>
+
+                @if (selectedBus(); as bus) {
+                  <div class="space-y-3">
+                    
+                    <!-- Header -->
+                    <div class="flex justify-between items-center">
+                      <div class="flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full" [style.background-color]="bus.color"></span>
+                        <span class="text-xs font-extrabold uppercase">{{ bus.type }} Line {{ bus.lineName }}</span>
+                      </div>
+                      <span class="text-[9px] text-slate-400 font-mono">{{ bus.id }}</span>
+                    </div>
+
+                    <!-- Metrics Grid -->
+                    <div class="grid grid-cols-2 gap-3 pt-2">
+                      <div class="p-2.5 rounded-xl glass-card-dark">
+                        <span class="text-[9px] uppercase font-bold text-slate-500 block">Status</span>
+                        <span class="text-xs font-bold"
+                              [ngClass]="bus.status === 'On Time' ? 'text-emerald-500' : 'text-orange-500'">
+                          {{ bus.status }} {{ bus.delayMinutes > 0 ? '(+' + bus.delayMinutes + 'm)' : '' }}
+                        </span>
+                      </div>
+                      <div class="p-2.5 rounded-xl glass-card-dark">
+                        <span class="text-[9px] uppercase font-bold text-slate-500 block">Occupancy</span>
+                        <span class="text-xs font-bold">{{ bus.occupancy }} Density</span>
+                      </div>
+                      <div class="p-2.5 rounded-xl glass-card-dark">
+                        <span class="text-[9px] uppercase font-bold text-slate-500 block">Telemetry Speed</span>
+                        <span class="text-xs font-bold text-blue-400">{{ bus.speed }} km/h</span>
+                      </div>
+                      <div class="p-2.5 rounded-xl glass-card-dark">
+                        <span class="text-[9px] uppercase font-bold text-slate-500 block">Next Station</span>
+                        <span class="text-xs font-bold line-clamp-1">{{ bus.nextStop }}</span>
+                      </div>
+                    </div>
+
+                    <!-- Driver Details -->
+                    <div class="p-3 rounded-xl glass-card-dark space-y-1">
+                      <span class="text-[9px] uppercase font-bold text-slate-500 block">IoT Certified Operator</span>
+                      <div class="flex justify-between text-xs font-bold">
+                        <span>{{ bus.driverName }}</span>
+                        <span class="text-amber-500 flex items-center gap-0.5">★ {{ bus.driverRating }}</span>
+                      </div>
+                      <div class="text-[9px] text-slate-400">Punctuality index: {{ bus.punctualityScore }}%</div>
+                    </div>
+
+                  </div>
+                } @else {
+                  <div class="text-center py-8 text-xs text-slate-400">
+                    <mat-icon class="text-2xl text-slate-600 block mb-2">gps_fixed</mat-icon>
+                    Select an active marker on the live city coordinate map to load operational IoT logs.
+                  </div>
+                }
+
+              </div>
+
+            </div>
+
+          </div>
+        }
+
+        <!-- ==================== TAB 4: AI TRAVEL ASSISTANT ==================== -->
+        @if (currentTab() === 'assistant') {
+          <div class="max-w-3xl mx-auto flex flex-col h-[calc(100vh-140px)]">
+            
+            <!-- Chat logs -->
+            <div class="flex-1 overflow-y-auto space-y-4 p-4 mb-4 glass-card">
+              
+              @for (msg of chatMessages(); track $index) {
+                <div class="flex flex-col" [ngClass]="msg.sender === 'user' ? 'items-end' : 'items-start'">
+                  <div class="max-w-[85%] rounded-2xl p-4 shadow-md text-xs leading-relaxed"
+                       [ngClass]="msg.sender === 'user' ? 
+                         'bg-blue-600 text-white rounded-tr-none' : 
+                         'glass-card-dark rounded-tl-none text-slate-200 border-none'">
+                    <p class="whitespace-pre-wrap">{{ msg.text }}</p>
+                  </div>
+                  <span class="text-[9px] text-slate-500 font-mono mt-1 px-1">
+                    {{ msg.timestamp | date:'shortTime' }}
+                  </span>
+                </div>
+              }
+
+              @if (chatLoading()) {
+                <div class="flex justify-start">
+                  <div class="glass-card-dark rounded-2xl p-4 rounded-tl-none flex items-center gap-2 border-none">
+                    <span class="w-1.5 h-1.5 bg-blue-500 rounded-full animate-bounce"></span>
+                    <span class="w-1.5 h-1.5 bg-blue-500 rounded-full animate-bounce [animation-delay:0.2s]"></span>
+                    <span class="w-1.5 h-1.5 bg-blue-500 rounded-full animate-bounce [animation-delay:0.4s]"></span>
+                  </div>
+                </div>
+              }
+
+            </div>
+
+            <!-- Voice simulator bar if active -->
+            @if (voiceListening()) {
+              <div class="bg-blue-600/10 border border-blue-500/20 p-3 rounded-2xl mb-3 flex items-center justify-between animate-pulse">
+                <div class="flex items-center gap-2.5 text-xs text-blue-400 font-bold">
+                  <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping"></span>
+                  <span>Transit Voice Engine Listening...</span>
+                </div>
+                <button (click)="stopListening()" class="text-[10px] text-red-500 font-bold uppercase hover:underline">
+                  Stop
+                </button>
+              </div>
+            }
+
+            <!-- Helper quick queries triggers -->
+            <div class="flex gap-2 py-1 mb-2 overflow-x-auto shrink-0 scrollbar-none">
+              <button (click)="chatForm.setValue({message: 'How do I go from Gajuwaka to Kottavalasa?'}); sendChatMessage()"
+                      class="shrink-0 text-[10px] hover:bg-white/10 px-3 py-1.5 rounded-full font-bold glass-card-dark border-none">
+                🚌 Gajuwaka to Kottavalasa
+              </button>
+              <button (click)="chatForm.setValue({message: 'How do I go from Scindia to Simahachalam?'}); sendChatMessage()"
+                      class="shrink-0 text-[10px] hover:bg-white/10 px-3 py-1.5 rounded-full font-bold glass-card-dark border-none">
+                🚌 Scindia to Simahachalam
+              </button>
+
+              <button (click)="chatForm.setValue({message: 'Help me find Bus 55K routes.'}); sendChatMessage()"
+                      class="shrink-0 text-[10px] hover:bg-white/10 px-3 py-1.5 rounded-full font-bold glass-card-dark border-none">
+                🎟️ Bus 55K routes
+              </button>
+            </div>
+
+            <!-- Chat input form -->
+            <form [formGroup]="chatForm" (ngSubmit)="sendChatMessage()" class="flex gap-2 shrink-0">
+              
+              <!-- Voice Microphone Trigger -->
+              <button type="button" (click)="startListening()" 
+                      [ngClass]="voiceListening() ? 'bg-red-500 text-white animate-pulse' : 'text-slate-400 hover:text-white border-none'"
+                      class="p-3 rounded-2xl shrink-0 flex items-center justify-center transition-all glass-card-dark">
+                <mat-icon>mic</mat-icon>
+              </button>
+
+              <input formControlName="message" placeholder="Ask in natural language (e.g., 'Cheapest route to beach')" 
+                     class="flex-1 text-xs p-3.5 rounded-2xl focus:outline-none glass-input"
+                     [ngClass]="isDarkMode() ? 'text-white' : 'text-slate-800'">
+
+              <button type="submit" [disabled]="chatForm.invalid || chatLoading()"
+                      class="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white p-3.5 rounded-2xl shrink-0 transition-all flex items-center justify-center cursor-pointer">
+                <mat-icon>send</mat-icon>
+              </button>
+            </form>
+
+          </div>
+        }
+
+        <!-- ==================== TAB 5: NEARBY BUS STOPS ==================== -->
+        @if (currentTab() === 'stops') {
+          <div class="max-w-5xl mx-auto space-y-6">
+            
+            <div class="flex justify-between items-center">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">Stops coordinates within walking radius</h4>
+              <span class="text-[10px] text-emerald-500 font-semibold uppercase flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> GPS Grounding Active
+              </span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              @for (stop of busStops(); track stop.id) {
+                <div class="p-5 space-y-4 relative overflow-hidden transition-all hover:-translate-y-1 hover:shadow-md flex flex-col justify-between glass-card">
+                  
+                  <div class="space-y-2">
+                    <div class="flex justify-between items-start">
+                      <span class="text-[9px] text-slate-500 font-mono">{{ stop.id }}</span>
+                      <span class="text-xs text-blue-500 font-bold uppercase tracking-wide">
+                        {{ stop.distanceMeter }} meters away
+                      </span>
+                    </div>
+
+                    <h4 class="text-xs font-bold">{{ stop.name }}</h4>
+                    
+                    <div class="flex items-center gap-1.5 pt-1">
+                      <span class="text-[9px] text-slate-400">Bus lines:</span>
+                      @for (line of stop.lines; track line) {
+                        <span class="bg-blue-600/10 text-blue-500 text-[8px] font-bold px-1.5 py-0.5 rounded border border-blue-500/10">
+                          {{ line }}
+                        </span>
+                      }
+                    </div>
+
+                    <p class="text-[10px] text-slate-400">
+                      Coordinates: <span class="font-mono text-slate-300">{{ stop.lat }}, {{ stop.lng }}</span>
+                    </p>
+                  </div>
+
+                  <div class="pt-4 border-t border-slate-800/40 flex items-center justify-between gap-2 mt-2">
+                    <button (click)="routeForm.patchValue({from: stop.name}); switchTab('planner')"
+                            class="text-[10px] bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-xl border border-slate-700/60 font-bold transition-all">
+                      Directions From
+                    </button>
+                    
+                    <!-- Scan sticker mock -->
+                    <button (click)="selectedStop.set(stop); scanDemoStop(stop); switchTab('tracker')"
+                            class="text-[10px] bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-xl font-bold transition-all flex items-center gap-1">
+                      <mat-icon class="text-xs">qr_code</mat-icon> Scan Stop
+                    </button>
+                  </div>
+
+                </div>
+              }
+            </div>
+
+          </div>
+        }
+
+
+
+        <!-- ==================== TAB 7: USER PROFILE & SETTINGS ==================== -->
+        @if (currentTab() === 'dashboard') {
+          <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
+            
+            <!-- Left Panel: Saved Trips & Settings -->
+            <div class="lg:col-span-7 space-y-6">
+              
+              <!-- Travel Profile & Favorites Form -->
+              <div class="p-6 shadow-xl space-y-4 glass-card">
+                
+                <h3 class="text-sm font-bold uppercase tracking-wider text-slate-400">My Travel Coordinates (Shortcuts)</h3>
+                
+                <form [formGroup]="configForm" (ngSubmit)="saveFavorites()" class="space-y-4">
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="space-y-1.5">
+                      <label for="home-address" class="text-[10px] font-bold text-slate-400 uppercase">🏠 Home Address</label>
+                      <input id="home-address" formControlName="home" placeholder="Enter home address/landmark..."
+                             class="w-full text-xs p-3 rounded-xl focus:outline-none glass-input text-white">
+                    </div>
+
+                    <div class="space-y-1.5">
+                      <label for="office-address" class="text-[10px] font-bold text-slate-400 uppercase">💼 Office Location</label>
+                      <input id="office-address" formControlName="office" placeholder="Enter work/office address..."
+                             class="w-full text-xs p-3 rounded-xl focus:outline-none glass-input text-white">
+                    </div>
+
+                    <div class="space-y-1.5">
+                      <label for="college-address" class="text-[10px] font-bold text-slate-400 uppercase">🎓 College Campus</label>
+                      <input id="college-address" formControlName="college" placeholder="Enter university campus gate..."
+                             class="w-full text-xs p-3 rounded-xl focus:outline-none glass-input text-white">
+                    </div>
+
+                    <div class="space-y-1.5">
+                      <label for="assistant-language" class="text-[10px] font-bold text-slate-400 uppercase">🌍 Assistant Language</label>
+                      <select id="assistant-language" formControlName="language" 
+                              class="w-full text-xs p-3 rounded-xl focus:outline-none glass-input text-white select-reset-options">
+                        <option value="English" class="bg-slate-900 text-white">English</option>
+                        <option value="Hindi" class="bg-slate-900 text-white">Hindi / हिन्दी</option>
+                        <option value="Telugu" class="bg-slate-900 text-white">Telugu / తెలుగు</option>
+                        <option value="Tamil" class="bg-slate-900 text-white">Tamil / தமிழ்</option>
+                        <option value="Spanish" class="bg-slate-900 text-white">Spanish / Español</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-2.5 px-5 rounded-xl transition-all cursor-pointer">
+                    Update Profile Shortcuts
+                  </button>
+                </form>
+
+              </div>
+
+              <!-- Synchronized Offline Offline Routes Logs -->
+              <div class="p-6 shadow-xl space-y-4 glass-card">
+                
+                <h3 class="text-sm font-bold uppercase tracking-wider text-slate-400">Synchronized Offline Trips Caches</h3>
+
+                @if (offlineRoutes().length > 0) {
+                  <div class="space-y-3">
+                    @for (route of offlineRoutes(); track route.id) {
+                      <div class="p-3.5 rounded-2xl flex justify-between items-center gap-4 glass-card-dark border-none">
+                        <div class="space-y-1">
+                          <h4 class="text-xs font-bold">{{ route.from }} to {{ route.to }}</h4>
+                          <div class="flex items-center gap-2">
+                            <span class="bg-blue-600 text-[8px] font-extrabold px-1.5 py-0.5 rounded text-white uppercase">
+                              {{ route.routeData.recommendedRoute.lineName }}
+                            </span>
+                            <span class="text-[10px] text-slate-400 font-mono">Fare: ₹{{ route.routeData.recommendedRoute.fareAmount }}</span>
+                          </div>
+                        </div>
+
+                        <div class="flex items-center gap-1.5">
+                          <button (click)="loadOfflineRoute(route)"
+                                  class="bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold px-2.5 py-1 rounded-lg transition-all">
+                            Load
+                          </button>
+                          <button (click)="deleteOfflineRoute(route.id)" 
+                                  class="bg-red-500/10 hover:bg-red-500/20 text-red-500 text-[10px] font-bold px-2.5 py-1 rounded-lg border border-red-500/10 transition-all">
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                    }
+                  </div>
+                } @else {
+                  <div class="text-center py-8 text-xs text-slate-400">
+                    <mat-icon class="text-2xl text-slate-600 block mb-1">offline_bolt</mat-icon>
+                    No offline synchronized route logs stored locally. Plan routes and select 'Save Offline' to populate.
+                  </div>
+                }
+
+              </div>
+
+            </div>
+
+            <!-- Right Panel: Carbon Analytics & Push notifications log -->
+            <div class="lg:col-span-5 space-y-6">
+              
+              <!-- Eco Offsets Tracker -->
+              <div class="p-5 shadow-xl space-y-4 glass-card">
+                
+                <div class="flex items-center gap-2">
+                  <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center">
+                    <mat-icon>eco</mat-icon>
+                  </div>
+                  <div>
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">Carbon offset logs</h4>
+                    <div class="text-lg font-black text-emerald-500">14.5 kg CO₂ Saved</div>
+                  </div>
+                </div>
+
+                <p class="text-[11px] text-slate-400 leading-relaxed">
+                  By bypassing single-passenger cabs and choosing TransitAI guided buses/metro, you prevented 14.5kg of carbon emissions this week! Keep riding to achieve a green commute badge.
+                </p>
+
+                <!-- Badge level -->
+                <div class="p-3 rounded-xl flex justify-between items-center glass-card-dark">
+                  <span class="text-[10px] font-semibold text-slate-300">Commute Achievement</span>
+                  <span class="bg-emerald-500 text-white text-[9px] font-bold uppercase px-2 py-0.5 rounded">ECO CHALLENGER</span>
+                </div>
+
+              </div>
+
+              <!-- Push Notifications logs -->
+              <div class="p-5 shadow-xl space-y-4 glass-card">
+                
+                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">FCM Push Logs History</h4>
+
+                <div class="space-y-2.5 max-h-56 overflow-y-auto">
+                  @for (notify of notifications(); track $index) {
+                    <div class="p-3 rounded-xl flex gap-2.5 items-start glass-card-dark border-none">
+                      <mat-icon class="text-xs shrink-0 mt-0.5"
+                                [ngClass]="{
+                                  'text-emerald-500': notify.type === 'success',
+                                  'text-red-500': notify.type === 'alert',
+                                  'text-blue-500': notify.type === 'info'
+                                }">
+                        {{ notify.type === 'success' ? 'check_circle' : notify.type === 'alert' ? 'warning' : 'notifications' }}
+                      </mat-icon>
+                      <div class="space-y-0.5 flex-1">
+                        <p class="text-[10px] leading-relaxed">{{ notify.text }}</p>
+                        <span class="text-[8px] text-slate-500 block font-mono">{{ notify.time | date:'mediumTime' }}</span>
+                      </div>
+                    </div>
+                  }
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+        }
+
+        <!-- ==================== TAB 8: ADMIN CONTROL TERMINAL ==================== -->
+        @if (currentTab() === 'admin') {
+          <div class="max-w-6xl mx-auto space-y-6">
+            
+            <!-- Core Analytics Grid Widgets -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              
+              <!-- Daily Passenger Volumes Chart (SVG Bar) -->
+              <div class="p-5 shadow-xl space-y-3 glass-card">
+                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">Daily Passenger Vol.</h4>
+                
+                <!-- SVG Bar Chart -->
+                <div class="h-44 flex items-end justify-between pt-6 px-2 border-b border-slate-800">
+                  <div class="flex flex-col items-center gap-1 flex-1">
+                    <div class="w-full bg-blue-600/30 hover:bg-blue-600 h-20 rounded-t transition-all" title="Mon: 10.2k"></div>
+                    <span class="text-[8px] font-mono">M</span>
+                  </div>
+                  <div class="flex flex-col items-center gap-1 flex-1">
+                    <div class="w-full bg-blue-600/30 hover:bg-blue-600 h-28 rounded-t transition-all" title="Tue: 11.5k"></div>
+                    <span class="text-[8px] font-mono">T</span>
+                  </div>
+                  <div class="flex flex-col items-center gap-1 flex-1">
+                    <div class="w-full bg-blue-600/30 hover:bg-blue-600 h-32 rounded-t transition-all" title="Wed: 12.0k"></div>
+                    <span class="text-[8px] font-mono">W</span>
+                  </div>
+                  <div class="flex flex-col items-center gap-1 flex-1">
+                    <div class="w-full bg-blue-600/30 hover:bg-blue-600 h-24 rounded-t transition-all" title="Thu: 10.8k"></div>
+                    <span class="text-[8px] font-mono">T</span>
+                  </div>
+                  <div class="flex flex-col items-center gap-1 flex-1">
+                    <div class="w-full bg-blue-600 hover:bg-blue-700 h-40 rounded-t transition-all shadow-lg" title="Fri: 14.5k"></div>
+                    <span class="text-[8px] font-mono font-bold text-blue-500">F</span>
+                  </div>
+                  <div class="flex flex-col items-center gap-1 flex-1">
+                    <div class="w-full bg-blue-600/30 hover:bg-blue-600 h-16 rounded-t transition-all" title="Sat: 8.4k"></div>
+                    <span class="text-[8px] font-mono">S</span>
+                  </div>
+                  <div class="flex flex-col items-center gap-1 flex-1">
+                    <div class="w-full bg-blue-600/30 hover:bg-blue-600 h-12 rounded-t transition-all" title="Sun: 6.2k"></div>
+                    <span class="text-[8px] font-mono">S</span>
+                  </div>
+                </div>
+
+                <div class="text-[9px] text-slate-400 text-center pt-1">
+                  Peak ridership recorded on **Friday (14.5k commuters)**
+                </div>
+              </div>
+
+              <!-- Delay Analytics (Donut SVG Chart) -->
+              <div class="p-5 shadow-xl space-y-3 glass-card">
+                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">Delay Analytics Breakdown</h4>
+                
+                <div class="flex items-center justify-around h-44">
+                  <!-- Custom Donut SVG -->
+                  <svg width="120" height="120" viewBox="0 0 42 42" class="donut">
+                    <circle class="donut-ring" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#1E293B" stroke-width="4.5"></circle>
+                    
+                    <!-- Traffic 45% (Blue) -->
+                    <circle class="donut-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#2563EB" stroke-width="4.5" stroke-dasharray="45 55" stroke-dashoffset="100"></circle>
+                    <!-- Weather 25% (Orange) -->
+                    <circle class="donut-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#F97316" stroke-width="4.5" stroke-dasharray="25 75" stroke-dashoffset="55"></circle>
+                    <!-- Signaling 30% (Green) -->
+                    <circle class="donut-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#10B981" stroke-width="4.5" stroke-dasharray="30 70" stroke-dashoffset="30"></circle>
+                  </svg>
+
+                  <div class="space-y-1 text-[9px] font-bold">
+                    <div class="flex items-center gap-1 text-blue-500">
+                      <span class="w-2 h-2 rounded-full bg-blue-500"></span> Traffic (45%)
+                    </div>
+                    <div class="flex items-center gap-1 text-orange-500">
+                      <span class="w-2 h-2 rounded-full bg-orange-500"></span> Weather (25%)
+                    </div>
+                    <div class="flex items-center gap-1 text-emerald-500">
+                      <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Signals (30%)
+                    </div>
+                  </div>
+                </div>
+
+                <div class="text-[9px] text-slate-400 text-center">
+                  Traffic and rain waterlogging are primary drivers.
+                </div>
+              </div>
+
+              <!-- Driver Performance Logs with Commend -->
+              <div class="p-5 shadow-xl space-y-3 glass-card">
+                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">Driver Punctuality Registry</h4>
+                
+                <div class="space-y-2 max-h-44 overflow-y-auto">
+                  @for (driver of drivers; track driver.name) {
+                    <div class="p-2 rounded-xl flex justify-between items-center text-[10px] glass-card-dark border-none">
+                      <div>
+                        <div class="font-bold text-slate-200">{{ driver.name }}</div>
+                        <div class="text-[9px] text-slate-500">{{ driver.route }} ● Rating: {{ driver.rating }}</div>
+                      </div>
+                      <div class="flex items-center gap-2">
+                        <span class="bg-blue-600/10 text-blue-400 font-bold px-1.5 py-0.5 rounded">{{ driver.punctuality }}</span>
+                        <button (click)="commendDriver(driver.name)" class="bg-emerald-600 text-white font-bold p-1 rounded hover:bg-emerald-700">
+                          <mat-icon class="text-xs h-3.5 w-3.5">thumb_up</mat-icon>
+                        </button>
+                      </div>
+                    </div>
+                  }
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Interactive Heatmap of crowded routes -->
+            <div class="p-6 shadow-xl space-y-4 glass-card">
+              
+              <div class="flex justify-between items-center">
+                <div>
+                  <h3 class="text-sm font-bold uppercase tracking-wider text-slate-400">Heatmap of crowded routes</h3>
+                  <p class="text-[10px] text-slate-400">Tracks average passenger load index by route and hour.</p>
+                </div>
+                
+                <div class="flex gap-2 items-center text-[8px] font-bold">
+                  <div class="flex items-center gap-1 text-green-500">
+                    <span class="w-2.5 h-2.5 bg-green-500/20 border border-green-500/30 rounded"></span> Low (&lt;40%)
+                  </div>
+                  <div class="flex items-center gap-1 text-yellow-500">
+                    <span class="w-2.5 h-2.5 bg-yellow-500/20 border border-yellow-500/30 rounded"></span> Med (40-75%)
+                  </div>
+                  <div class="flex items-center gap-1 text-red-500">
+                    <span class="w-2.5 h-2.5 bg-red-500/20 border border-red-500/30 rounded"></span> High (&gt;75%)
+                  </div>
+                </div>
+              </div>
+
+              <!-- Heatmap Grid Table -->
+              <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs border-collapse">
+                  <thead>
+                    <tr class="border-b border-slate-800">
+                      <th class="py-2.5 px-3 text-[10px] text-slate-500 font-bold uppercase">Transit Line</th>
+                      @for (time of heatmapTimes; track time) {
+                        <th class="py-2.5 px-3 text-[10px] text-slate-500 font-bold uppercase text-center">{{time}}</th>
+                      }
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @for (route of heatmapRoutes; track route; let rIdx = $index) {
+                      <tr class="border-b border-slate-800/40 hover:bg-slate-800/10">
+                        <td class="py-3 px-3 font-bold text-slate-300">{{ route }}</td>
+                        @for (val of heatmapValues[rIdx]; track $index; let tIdx = $index) {
+                          <td class="p-1">
+                            <button (click)="onHeatmapCellClick(rIdx, tIdx)"
+                                    [ngClass]="{
+                                      'bg-green-500/10 text-green-500 border border-green-500/20': val < 40,
+                                      'bg-yellow-500/10 text-yellow-500 border border-yellow-500/20': val >= 40 && val <= 75,
+                                      'bg-red-500/10 text-red-500 border border-red-500/20': val > 75
+                                    }"
+                                    class="w-full py-2 rounded text-[10px] font-mono font-bold text-center select-none cursor-pointer hover:scale-105 hover:shadow-sm transition-all">
+                              {{ val }}%
+                            </button>
+                          </td>
+                        }
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Click Cell detailed analytics -->
+              @if (selectedHeatmapCell()) {
+                <div class="p-4 rounded-2xl flex justify-between items-center glass-card-dark border-none">
+                  <div class="space-y-1">
+                    <div class="text-[9px] text-slate-500 font-bold uppercase">Sensor cell inspection</div>
+                    <div class="text-xs font-bold text-slate-200">
+                      Line: <span class="text-blue-400">{{ selectedHeatmapCell()?.route }}</span> @ Hour: <span class="text-blue-400">{{ selectedHeatmapCell()?.time }}</span>
+                    </div>
+                  </div>
+                  <div>
+                    <span class="text-[10px] font-bold uppercase tracking-wide">Crowd Level:</span>
+                    <span class="text-xs font-extrabold px-3 py-1 rounded-full ml-2 uppercase"
+                          [ngClass]="{
+                            'bg-green-500/10 text-green-500': selectedHeatmapCell()!.density < 40,
+                            'bg-yellow-500/10 text-yellow-500': selectedHeatmapCell()!.density >= 40 && selectedHeatmapCell()!.density <= 75,
+                            'bg-red-500/10 text-red-500': selectedHeatmapCell()!.density > 75
+                          }">
+                      {{ selectedHeatmapCell()?.density }}% ({{ selectedHeatmapCell()!.density > 75 ? 'HIGH CRITICAL' : selectedHeatmapCell()!.density >= 40 ? 'MODERATE' : 'OPTIMAL SEATING' }})
+                    </span>
+                  </div>
+                </div>
+              }
+
+            </div>
+
+          </div>
+        }
+
+        <!-- ==================== TAB 9: Spec About Ecosystem ==================== -->
+        @if (currentTab() === 'about') {
+          <div class="max-w-4xl mx-auto space-y-6">
+            
+            <div class="p-6 shadow-xl space-y-4 glass-card">
+              <h3 class="text-lg font-extrabold tracking-tight">TransitAI System Architecture</h3>
+              <p class="text-xs text-slate-400 leading-relaxed">
+                TransitAI is built to streamline urban transport accessibility for senior citizens, visually impaired commuters, students, and tourists. By removing the dependency on legacy bus timetables and routing directories, TransitAI optimizes commutes in high-stress, unfamiliar environments.
+              </p>
+
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+                <div class="space-y-2">
+                  <div class="font-extrabold text-xs text-blue-500 uppercase tracking-wider">Neural Routing Engine</div>
+                  <p class="text-[11px] text-slate-400 leading-relaxed">
+                    Uses Gemini-3.5-flash with custom schema models. Grounding queries analyze weather logs, traffic levels, and historical delay matrices to compute fastest multi-modal pathways.
+                  </p>
+                </div>
+
+                <div class="space-y-2">
+                  <div class="font-extrabold text-xs text-emerald-500 uppercase tracking-wider">IoT Telemetry Caches</div>
+                  <p class="text-[11px] text-slate-400 leading-relaxed">
+                    Connected with dummy IoT units mapping satellite coordinate streams. Every 4 seconds, bus speeds, fuel ranges, driver details, and cabin crowd indexes are updated recursively.
+                  </p>
+                </div>
+
+                <div class="space-y-2">
+                  <div class="font-extrabold text-xs text-purple-500 uppercase tracking-wider">Adaptive Accessibility</div>
+                  <p class="text-[11px] text-slate-400 leading-relaxed">
+                    Incorporate Web Speech synthesis and recognition capabilities. Visually impaired commuters can utilize screen readers, speak destinations, or scan stop stickers instantly.
+                  </p>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        }
+
+        <!-- ==================== TAB 10: Operator Contact ==================== -->
+        @if (currentTab() === 'contact') {
+          <div class="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
+            
+            <!-- Feedback Form -->
+            <div class="lg:col-span-7 p-6 shadow-xl space-y-4 glass-card">
+              
+              <h3 class="text-sm font-bold uppercase tracking-wider text-slate-400">Transit Operator Helpline</h3>
+              
+              <form [formGroup]="contactForm" (ngSubmit)="submitContactForm()" class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div class="space-y-1.5">
+                    <label for="commuter-name" class="text-[10px] font-bold text-slate-400 uppercase">Commuter Name</label>
+                    <input id="commuter-name" formControlName="name" placeholder="John Doe"
+                           class="w-full text-xs p-3 rounded-xl focus:outline-none glass-input text-white">
+                  </div>
+
+                  <div class="space-y-1.5">
+                    <label for="commuter-email" class="text-[10px] font-bold text-slate-400 uppercase">Email Address</label>
+                    <input id="commuter-email" formControlName="email" placeholder="john@example.com"
+                           class="w-full text-xs p-3 rounded-xl focus:outline-none glass-input text-white">
+                  </div>
+                </div>
+
+                <div class="space-y-1.5">
+                  <label for="commuter-subject" class="text-[10px] font-bold text-slate-400 uppercase">Subject Topic</label>
+                  <input id="commuter-subject" formControlName="subject" placeholder="e.g., Delay reports, ticket validator issues"
+                         class="w-full text-xs p-3 rounded-xl focus:outline-none glass-input text-white">
+                </div>
+
+                <div class="space-y-1.5">
+                  <label for="commuter-message" class="text-[10px] font-bold text-slate-400 uppercase">Detailed Message</label>
+                  <textarea id="commuter-message" formControlName="message" rows="4" placeholder="Type feedback or operational concerns..."
+                            class="w-full text-xs p-3 rounded-xl focus:outline-none glass-input text-white"></textarea>
+                </div>
+
+                <button type="submit" [disabled]="contactForm.invalid"
+                        class="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white text-xs font-bold py-2.5 px-6 rounded-xl transition-all cursor-pointer">
+                  Submit Operator Feedback
+                </button>
+              </form>
+
+            </div>
+
+            <!-- Emergency Agencies numbers -->
+            <div class="lg:col-span-5 p-5 shadow-xl space-y-4 glass-card">
+              
+              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">Emergency Agency Hotlines</h4>
+              
+              <div class="space-y-3 text-xs">
+                <div class="p-3 rounded-xl glass-card-dark border-none">
+                  <div class="font-bold">National Disaster Response Force (NDRF)</div>
+                  <div class="text-[10px] text-slate-400">Ph: 011-24363260</div>
+                </div>
+
+                <div class="p-3 rounded-xl glass-card-dark border-none">
+                  <div class="font-bold">Women Helpline (Safety Dispatch)</div>
+                  <div class="text-[10px] text-slate-400">Ph: 1091 / 181</div>
+                </div>
+
+                <div class="p-3 rounded-xl glass-card-dark border-none">
+                  <div class="font-bold">Local Railway Police Control</div>
+                  <div class="text-[10px] text-slate-400">Ph: 1512</div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        }
+
+      </main>
+
+    </div>
+
+  </div>
+
+</div>

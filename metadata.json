@@ -1,0 +1,11 @@
+{
+  "name": "TransitAI",
+  "description": "TransitAI is an intelligent, AI-powered public transport assistant helping commuters and tourists travel hassle-free with route optimization, live bus tracking, occupancy prediction, and multilingual voice assist.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

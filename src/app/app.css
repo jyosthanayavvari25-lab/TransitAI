@@ -1,0 +1,152 @@
+/* App-specific custom css enhancements */
+
+/* SVG Donut Chart styling */
+.donut-ring {
+  stroke: rgba(148, 163, 184, 0.1);
+}
+.dark .donut-ring {
+  stroke: rgba(148, 163, 184, 0.05);
+}
+
+.donut-segment {
+  transform: rotate(-90deg);
+  transform-origin: center;
+  transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Custom fade transitions */
+.tab-fade-enter {
+  animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Scrollbar behaviors for custom scroll fields */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* ==================== FROSTED GLASS THEME STYLES ==================== */
+
+.glass-app-bg {
+  background: radial-gradient(circle at top right, #101f42 0%, #080c16 100%) !important;
+  background-attachment: fixed !important;
+}
+.light .glass-app-bg {
+  background: radial-gradient(circle at top right, #f8fafc 0%, #e2e8f0 100%) !important;
+  background-attachment: fixed !important;
+}
+
+/* Glass Component Containers */
+.glass-sidebar {
+  background: rgba(15, 23, 42, 0.35) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+.light .glass-sidebar {
+  background: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border-right: 1px solid rgba(0, 0, 0, 0.06) !important;
+}
+
+.glass-header {
+  background: rgba(15, 23, 42, 0.25) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+.light .glass-header {
+  background: rgba(255, 255, 255, 0.75) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.07) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 1.5rem !important;
+}
+.light .glass-card {
+  background: rgba(255, 255, 255, 0.65) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+  border-radius: 1.5rem !important;
+}
+
+.glass-card-dark {
+  background: rgba(0, 0, 0, 0.3) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 1.5rem !important;
+}
+.light .glass-card-dark {
+  background: rgba(241, 245, 249, 0.8) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  border-radius: 1.5rem !important;
+}
+
+.glass-input {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  transition: all 0.2s ease-in-out !important;
+}
+.light .glass-input {
+  background: rgba(255, 255, 255, 0.8) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  transition: all 0.2s ease-in-out !important;
+}
+.glass-input:focus {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(59, 130, 246, 0.5) !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15) !important;
+}
+.light .glass-input:focus {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-color: rgba(37, 99, 235, 0.5) !important;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
+}
+
+/* Map Background & Route Overlay */
+.map-bg {
+  background-image: radial-gradient(rgba(148, 163, 184, 0.12) 1.5px, transparent 1.5px) !important;
+  background-size: 24px 24px !important;
+}
+.dark .map-bg {
+  background-image: radial-gradient(rgba(51, 65, 85, 0.4) 1.5px, transparent 1.5px) !important;
+  background-color: rgba(15, 23, 42, 0.6) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+.route-line {
+  height: 4px !important;
+  background: linear-gradient(90deg, #3b82f6 0%, #10b981 100%) !important;
+  border-radius: 9999px !important;
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.4) !important;
+}
+
+.bus-icon {
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.5) !important;
+}
+
